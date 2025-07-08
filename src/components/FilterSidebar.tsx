@@ -79,7 +79,7 @@ export const FilterSidebar = ({
     filters.priceRange[1] !== priceRange[1];
 
   return (
-    <Card className="p-6 h-fit sticky top-6">
+    <Card className="p-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold">Filters</h3>
         {hasActiveFilters && (
@@ -136,7 +136,7 @@ export const FilterSidebar = ({
       {/* Airlines */}
       <div className="mb-6">
         <Label className="text-sm font-medium mb-3 block">Airlines</Label>
-        <div className="space-y-2 max-h-40 overflow-y-auto">
+        <div className="space-y-2">
           {availableAirlines.map((airline) => (
             <div key={airline} className="flex items-center space-x-2">
               <Checkbox
@@ -157,7 +157,7 @@ export const FilterSidebar = ({
       {/* Departure Airports */}
       <div className="mb-6">
         <Label className="text-sm font-medium mb-3 block">Departure Airports</Label>
-        <div className="space-y-2 max-h-32 overflow-y-auto">
+        <div className="space-y-2">
           {availableAirports.departure.map((airport) => (
             <div key={airport} className="flex items-center space-x-2">
               <Checkbox
@@ -178,7 +178,7 @@ export const FilterSidebar = ({
       {/* Arrival Airports */}
       <div>
         <Label className="text-sm font-medium mb-3 block">Arrival Airports</Label>
-        <div className="space-y-2 max-h-32 overflow-y-auto">
+        <div className="space-y-2">
           {availableAirports.arrival.map((airport) => (
             <div key={airport} className="flex items-center space-x-2">
               <Checkbox
