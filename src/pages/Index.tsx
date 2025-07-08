@@ -143,13 +143,16 @@ const Index = () => {
                     No flights found matching your criteria
                   </div>
                   <button
-                    onClick={() => setFilters({
-                      priceRange: [300, 900],
-                      departureAirports: [],
-                      arrivalAirports: [],
-                      stops: [],
-                      airlines: []
-                    })}
+                    onClick={() => {
+                      setFilters({
+                        priceRange: [300, 900],
+                        departureAirports: [],
+                        arrivalAirports: [],
+                        stops: [],
+                        airlines: []
+                      });
+                      setTempPriceRange([300, 900]);
+                    }}
                     className="text-travel-blue hover:text-travel-blue-dark transition-colors"
                   >
                     Clear all filters
