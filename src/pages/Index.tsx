@@ -1,16 +1,16 @@
 import { useState, useMemo } from "react";
 import { SearchSummary } from "@/components/SearchSummary";
-import { FlightCard, Flight } from "@/components/FlightCard";
+import { FlightCard, RoundTripFlight } from "@/components/FlightCard";
 import { FilterSidebar, FilterState } from "@/components/FilterSidebar";
 import { FlightResultsHeader, SortOption } from "@/components/FlightResultsHeader";
-import { mockFlights, searchQuery, availableAirports, availableAirlines } from "@/data/mockFlights";
+import { mockRoundTripFlights, searchQuery, availableAirports, availableAirlines } from "@/data/mockFlights";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const { toast } = useToast();
   const [sortBy, setSortBy] = useState<SortOption>('price');
   const [filters, setFilters] = useState<FilterState>({
-    priceRange: [150, 500],
+    priceRange: [300, 900],
     departureAirports: [],
     arrivalAirports: [],
     stops: [],
@@ -19,16 +19,16 @@ const Index = () => {
 
   // Filter and sort flights
   const filteredAndSortedFlights = useMemo(() => {
-    let filtered = mockFlights.filter(flight => {
+    let filtered = mockRoundTripFlights.filter(flight => {
       // Price filter
-      if (flight.price < filters.priceRange[0] || flight.price > filters.priceRange[1]) {
+      if (flight.totalPrice < filters.priceRange[0] || flight.totalPrice > filters.priceRange[1]) {
         return false;
       }
       
       // Departure airports filter
       if (filters.departureAirports.length > 0) {
         const airportMatch = filters.departureAirports.some(airport => 
-          airport.includes(flight.originCode)
+          airport.includes(flight.outbound.originCode)
         );
         if (!airportMatch) return false;
       }
@@ -36,19 +36,23 @@ const Index = () => {
       // Arrival airports filter
       if (filters.arrivalAirports.length > 0) {
         const airportMatch = filters.arrivalAirports.some(airport => 
-          airport.includes(flight.destinationCode)
+          airport.includes(flight.outbound.destinationCode)
         );
         if (!airportMatch) return false;
       }
       
-      // Stops filter
-      if (filters.stops.length > 0 && !filters.stops.includes(flight.stops)) {
-        return false;
+      // Stops filter (considering both legs)
+      if (filters.stops.length > 0) {
+        const outboundStopsMatch = filters.stops.includes(flight.outbound.stops);
+        const returnStopsMatch = filters.stops.includes(flight.return.stops);
+        if (!outboundStopsMatch && !returnStopsMatch) return false;
       }
       
-      // Airlines filter
-      if (filters.airlines.length > 0 && !filters.airlines.includes(flight.airline)) {
-        return false;
+      // Airlines filter (considering both legs)
+      if (filters.airlines.length > 0) {
+        const outboundAirlineMatch = filters.airlines.includes(flight.outbound.airline);
+        const returnAirlineMatch = filters.airlines.includes(flight.return.airline);
+        if (!outboundAirlineMatch && !returnAirlineMatch) return false;
       }
       
       return true;
@@ -58,15 +62,15 @@ const Index = () => {
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'price':
-          return a.price - b.price;
+          return a.totalPrice - b.totalPrice;
         case 'duration':
-          const aDuration = parseInt(a.duration.split('h')[0]) * 60 + parseInt(a.duration.split('h')[1].split('m')[0]);
-          const bDuration = parseInt(b.duration.split('h')[0]) * 60 + parseInt(b.duration.split('h')[1].split('m')[0]);
+          const aDuration = parseInt(a.outbound.duration.split('h')[0]) * 60 + parseInt(a.outbound.duration.split('h')[1].split('m')[0]);
+          const bDuration = parseInt(b.outbound.duration.split('h')[0]) * 60 + parseInt(b.outbound.duration.split('h')[1].split('m')[0]);
           return aDuration - bDuration;
         case 'departure':
-          return a.departureTime.localeCompare(b.departureTime);
+          return a.outbound.departureTime.localeCompare(b.outbound.departureTime);
         case 'arrival':
-          return a.arrivalTime.localeCompare(b.arrivalTime);
+          return a.outbound.arrivalTime.localeCompare(b.outbound.arrivalTime);
         default:
           return 0;
       }
@@ -76,10 +80,10 @@ const Index = () => {
   }, [filters, sortBy]);
 
   const handleBookFlight = (flightId: string) => {
-    const flight = mockFlights.find(f => f.id === flightId);
+    const flight = mockRoundTripFlights.find(f => f.id === flightId);
     toast({
-      title: "Flight Selected",
-      description: `You selected the ${flight?.airline} flight for $${flight?.price}. Redirecting to booking...`,
+      title: "Round-trip Flight Selected",
+      description: `You selected the round-trip combination for $${flight?.totalPrice} per person. Redirecting to booking...`,
     });
   };
 
@@ -96,7 +100,7 @@ const Index = () => {
               onFiltersChange={setFilters}
               availableAirports={availableAirports}
               availableAirlines={availableAirlines}
-              priceRange={[150, 500]}
+              priceRange={[300, 900]}
             />
           </div>
           
@@ -125,7 +129,7 @@ const Index = () => {
                   </div>
                   <button
                     onClick={() => setFilters({
-                      priceRange: [150, 500],
+                      priceRange: [300, 900],
                       departureAirports: [],
                       arrivalAirports: [],
                       stops: [],
