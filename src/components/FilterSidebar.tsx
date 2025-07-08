@@ -35,7 +35,7 @@ export const FilterSidebar = ({
 }: FilterSidebarProps) => {
   const [tempPriceRange, setTempPriceRange] = useState(filters.priceRange);
 
-  const handleFilterChange = (key: keyof FilterState, value: any) => {
+  const handleFilterChange = (key: keyof FilterState, value: FilterState[keyof FilterState]) => {
     onFiltersChange({
       ...filters,
       [key]: value

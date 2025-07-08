@@ -9,8 +9,14 @@ The current focus is on refining the existing "Flyby Results Explorer" demo page
 
 ## Recent Changes
 
-- Updated the Memory Bank to reflect the clarified scope of the project as a single-page demo application.
-- Confirmed that the existing implementation meets the core requirements of the specification.
+- **Price Filter Refinement:**
+    - Initially updated the price filter to include `Input` fields for more precise control.
+    - Reverted the price filter to its original design with labels, as requested, while keeping the dual-handle slider functionality.
+    - Fixed an issue where the `Slider` component was only rendering one handle.
+- **TypeScript and ESLint Fixes:**
+    - Resolved a series of TypeScript errors related to module resolution by updating the `tsconfig.app.json` file and ensuring `React` was explicitly imported.
+    - Fixed an ESLint error related to the use of the `any` type in a function signature.
+- **Memory Bank Update:** Updated the Memory Bank to reflect the clarified scope of the project as a single-page demo application.
 
 ## Next Steps
 

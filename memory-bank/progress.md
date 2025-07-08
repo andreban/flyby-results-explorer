@@ -8,6 +8,7 @@
 - The UI is responsive and provides a good user experience on different screen sizes.
 - The "Book" button simulation with a toast notification is implemented.
 - The application correctly displays the search query information.
+- The price filter now correctly uses a dual-handle slider and displays the selected range with labels.
 
 ## What's Left to Build
 
