@@ -25,6 +25,8 @@ interface FilterSidebarProps {
   };
   availableAirlines: string[];
   priceRange: [number, number];
+  tempPriceRange: [number, number];
+  setTempPriceRange: (value: [number, number]) => void;
 }
 
 export const FilterSidebar = ({
@@ -32,14 +34,21 @@ export const FilterSidebar = ({
   onFiltersChange,
   availableAirports,
   availableAirlines,
-  priceRange
+  priceRange,
+  tempPriceRange,
+  setTempPriceRange
 }: FilterSidebarProps) => {
-  const [tempPriceRange, setTempPriceRange] = useState(filters.priceRange);
-
   const handleFilterChange = (key: keyof FilterState, value: FilterState[keyof FilterState]) => {
     onFiltersChange({
       ...filters,
       [key]: value
+    });
+  };
+
+  const handleSmartFilterChange = (newFilters: Partial<FilterState>) => {
+    onFiltersChange({
+      ...filters,
+      ...newFilters
     });
   };
 
@@ -82,7 +91,7 @@ export const FilterSidebar = ({
   return (
     <Card>
       <div className="p-6">
-        <SmartFilters />
+        <SmartFilters onFiltersChange={handleSmartFilterChange} />
       </div>
       <div className="p-6 pt-0">
         <div className="flex items-center justify-between mb-4">

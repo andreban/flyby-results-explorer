@@ -16,10 +16,22 @@ const Index = () => {
     stops: [],
     airlines: []
   });
+  const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([300, 900]);
+
+  // Handle smart filter changes
+  const handleSmartFilterChange = (newFilters: Partial<FilterState>) => {
+    setFilters(prevFilters => {
+      const updatedFilters = { ...prevFilters, ...newFilters };
+      if (newFilters.priceRange) {
+        setTempPriceRange(newFilters.priceRange);
+      }
+      return updatedFilters;
+    });
+  };
 
   // Filter and sort flights
   const filteredAndSortedFlights = useMemo(() => {
-    let filtered = mockRoundTripFlights.filter(flight => {
+    const filtered = mockRoundTripFlights.filter(flight => {
       // Price filter
       if (flight.totalPrice < filters.priceRange[0] || flight.totalPrice > filters.priceRange[1]) {
         return false;
@@ -63,10 +75,11 @@ const Index = () => {
       switch (sortBy) {
         case 'price':
           return a.totalPrice - b.totalPrice;
-        case 'duration':
+        case 'duration': {
           const aDuration = parseInt(a.outbound.duration.split('h')[0]) * 60 + parseInt(a.outbound.duration.split('h')[1].split('m')[0]);
           const bDuration = parseInt(b.outbound.duration.split('h')[0]) * 60 + parseInt(b.outbound.duration.split('h')[1].split('m')[0]);
           return aDuration - bDuration;
+        }
         case 'departure':
           return a.outbound.departureTime.localeCompare(b.outbound.departureTime);
         case 'arrival':
@@ -97,10 +110,12 @@ const Index = () => {
           <div className="lg:w-80 flex-shrink-0">
             <FilterSidebar
               filters={filters}
-              onFiltersChange={setFilters}
+              onFiltersChange={handleSmartFilterChange}
               availableAirports={availableAirports}
               availableAirlines={availableAirlines}
               priceRange={[300, 900]}
+              tempPriceRange={tempPriceRange}
+              setTempPriceRange={setTempPriceRange}
             />
           </div>
           
