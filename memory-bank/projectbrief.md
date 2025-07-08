@@ -20,12 +20,14 @@ This project is a demo application showcasing a single "Flyby Results Explorer" 
     - Airlines
 - **Sorting:** Allow users to sort the results by price, duration, departure time, and arrival time.
 - **Booking Button:** Each result should have a button that simulates taking the user to a booking page.
+- **Smart Filters (UI Only):** A natural language interface for filtering flights. The user can type in their desired filters in plain English, and the system will apply them. For now, only the UI for this feature will be implemented.
 
 ### Out of Scope:
 - Flight search form
 - Booking pages
 - User authentication
 - Any other pages besides the flight results page
+- The implementation of the natural language processing for the Smart Filters feature.
 
 ### Primary Goals:
 - Provide a clean, intuitive, and responsive user interface for exploring flight options within the scope of a demo.

@@ -12,6 +12,7 @@
 
 ## What's Left to Build
 
+- **Smart Filters UI:** Implement the user interface for the new Smart Filters feature.
 - **UI/UX Refinements:** Continue to improve the visual design and user experience of the flight results page.
 - **Component Refactoring:** Refactor components for better reusability and maintainability.
 - **Testing:** Implement unit and component tests to ensure the application is working as expected.

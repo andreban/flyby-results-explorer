@@ -6,6 +6,7 @@ import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
+import { SmartFilters } from "./SmartFilters";
 
 export interface FilterState {
   priceRange: [number, number];
@@ -79,20 +80,24 @@ export const FilterSidebar = ({
     filters.priceRange[1] !== priceRange[1];
 
   return (
-    <Card className="p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">Filters</h3>
-        {hasActiveFilters && (
-          <button
-            onClick={clearAllFilters}
-            className="text-sm text-travel-blue hover:text-travel-blue-dark transition-colors"
-          >
-            Clear all
-          </button>
-        )}
+    <Card>
+      <div className="p-6">
+        <SmartFilters />
       </div>
+      <div className="p-6 pt-0">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold">Filters</h3>
+          {hasActiveFilters && (
+            <button
+              onClick={clearAllFilters}
+              className="text-sm text-travel-blue hover:text-travel-blue-dark transition-colors"
+            >
+              Clear all
+            </button>
+          )}
+        </div>
 
-      {/* Price Range */}
+        {/* Price Range */}
       <div className="mb-6">
         <Label className="text-sm font-medium mb-3 block">Price Range</Label>
         <Slider
@@ -223,6 +228,7 @@ export const FilterSidebar = ({
           </div>
         </>
       )}
+      </div>
     </Card>
   );
 };
