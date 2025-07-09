@@ -15,12 +15,24 @@ export const getFilterConfigFromQuery = async (query: string): Promise<Partial<F
     return {};
   }
 
+  const systemPrompt = `
+    You are a helpful assistant that extracts flight filter information from a user's query.
+    Those are additional rules to follow:
+      - No fields are required, so if the user doesn't provide information on a filter,
+        don't return the field
+      - If the user says the want prices "below" a certain value, they are ALWAYS referring
+        "maxPrice" filter.
+      - Do not include "minPrice" unless the user explicitly specifies parameters for that value.
+      - "direct" flights refer to the "nonstop" filter.
+      - "nonstop", "oneStop" and "twostop" can all be selected. If the user says "less than
+        2 stops" for example, both "nonstop" and "onestop" should be selected.
+  `;
   const session = await LanguageModel.create({
     temperature: 0.5,
     topK: 1,
     initialPrompts: [{
       role: "system",
-      content: "You are a helpful assistant that extracts flight filter information from a user's query. If minPrice is not provided assume 300."
+      content: systemPrompt,
     }]
   });
 
