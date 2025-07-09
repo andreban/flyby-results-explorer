@@ -12,6 +12,7 @@
 - **Smart Filters:** The Smart Filters feature is now connected to the Built-in AI API and can extract filter criteria from natural language queries. The integration has been improved to use a system prompt and to control the model's output with `temperature` and `topK` parameters. The logic for handling `nonstop`, `onestop`, and `twostop` filters has been corrected to align with the application's filter state. A regression that prevented the price filter from being updated by the Smart Filters feature has been fixed.
 - **Deployment:** The application now uses `HashRouter` and relative paths in `index.html` to support deployments to relative paths and prevent 404 errors. The `NotFound` page has been updated to use the `Link` component for correct client-side navigation.
 - **Airport Filter Compatibility:** Standardized the application to use 3-letter IATA codes for airport filtering, ensuring compatibility between the Prompt API and manual filter controls. The filtering logic has been updated for improved reliability.
+- **Display Airport Names:** The UI now displays airport names alongside their IATA codes in the flight results and filters, improving clarity for the user.
 
 ## What's Left to Build
 

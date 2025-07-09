@@ -27,6 +27,7 @@ The current focus is on ensuring the application is free of bugs and that all fe
     - Fixed a regression where the `minPrice` and `maxPrice` filters were not being updated when the Prompt API returned new values.
 
 - **Deployment Configuration:** The application now uses `HashRouter` and relative paths in `index.html` to support deployments to relative paths and prevent 404 errors. The `NotFound` page has been updated to use the `Link` component for correct client-side navigation.
+- **Display Airport Names:** The UI now displays airport names alongside their IATA codes in the flight results and filters. This was achieved by updating the `FlightCard` and `FilterSidebar` components to render both the `destinationCode` and `destination`, and `originCode` and `origin` properties from the flight data. The change is purely presentational, and the system continues to use IATA codes for all internal logic. The `availableAirports` data structure in `mockFlights.ts` was updated to support this change.
 
 ## Next Steps
 
@@ -37,4 +38,4 @@ The current focus is on ensuring the application is free of bugs and that all fe
 
 - **Standardized Airport Codes:** The application now exclusively uses 3-letter IATA codes for airport filtering to ensure compatibility between the Prompt API and the manual filter controls.
 - **Updated Filtering Logic:** The filtering logic in `Index.tsx` has been updated to use strict equality checks for airport codes, improving reliability.
-- **Mock Data Alignment:** The `availableAirports` in `mockFlights.ts` has been updated to provide a simple list of IATA codes, ensuring consistency with the filter state.
+- **Mock Data Alignment:** The `availableAirports` in `mockFlights.ts` has been updated to provide a list of objects containing both the IATA code and the airport name, ensuring consistency with the filter state.

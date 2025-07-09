@@ -22,8 +22,8 @@ interface FilterSidebarProps {
   onManualFilterChange: (filters: FilterState) => void;
   onSmartFilterChange: (filters: Partial<FilterState>) => void;
   availableAirports: {
-    departure: string[];
-    arrival: string[];
+    departure: { code: string; name: string }[];
+    arrival: { code: string; name: string }[];
   };
   availableAirlines: string[];
   priceRange: [number, number];
@@ -177,14 +177,14 @@ export const FilterSidebar = ({
         <Label className="text-sm font-medium mb-3 block">Departure Airports</Label>
         <div className="space-y-2">
           {availableAirports.departure.map((airport) => (
-            <div key={airport} className="flex items-center space-x-2">
+            <div key={airport.code} className="flex items-center space-x-2">
               <Checkbox
-                id={`dep-${airport}`}
-                checked={filters.departureAirports.includes(airport)}
-                onCheckedChange={() => toggleArrayFilter('departureAirports', airport)}
+                id={`dep-${airport.code}`}
+                checked={filters.departureAirports.includes(airport.code)}
+                onCheckedChange={() => toggleArrayFilter('departureAirports', airport.code)}
               />
-              <Label htmlFor={`dep-${airport}`} className="text-sm">
-                {airport}
+              <Label htmlFor={`dep-${airport.code}`} className="text-sm">
+                {airport.code} - {airport.name}
               </Label>
             </div>
           ))}
@@ -198,14 +198,14 @@ export const FilterSidebar = ({
         <Label className="text-sm font-medium mb-3 block">Arrival Airports</Label>
         <div className="space-y-2">
           {availableAirports.arrival.map((airport) => (
-            <div key={airport} className="flex items-center space-x-2">
+            <div key={airport.code} className="flex items-center space-x-2">
               <Checkbox
-                id={`arr-${airport}`}
-                checked={filters.arrivalAirports.includes(airport)}
-                onCheckedChange={() => toggleArrayFilter('arrivalAirports', airport)}
+                id={`arr-${airport.code}`}
+                checked={filters.arrivalAirports.includes(airport.code)}
+                onCheckedChange={() => toggleArrayFilter('arrivalAirports', airport.code)}
               />
-              <Label htmlFor={`arr-${airport}`} className="text-sm">
-                {airport}
+              <Label htmlFor={`arr-${airport.code}`} className="text-sm">
+                {airport.code} - {airport.name}
               </Label>
             </div>
           ))}

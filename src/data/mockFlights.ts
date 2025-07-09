@@ -199,8 +199,13 @@ export const searchQuery = {
 };
 
 export const availableAirports = {
-  departure: ["JFK", "LGA"],
-  arrival: ["LAX"]
+  departure: [
+    { code: "JFK", name: "New York" },
+    { code: "LGA", name: "New York" },
+  ],
+  arrival: [
+    { code: "LAX", name: "Los Angeles" },
+  ]
 };
 
 export const availableAirlines = [

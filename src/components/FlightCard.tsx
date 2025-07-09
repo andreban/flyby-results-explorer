@@ -60,8 +60,7 @@ const FlightLegDisplay = ({ leg, label }: { leg: FlightLeg; label: string }) => 
         {/* Departure */}
         <div className="text-left">
           <div className="text-xl font-bold text-foreground">{leg.departureTime}</div>
-          <div className="text-sm text-muted-foreground">{leg.originCode}</div>
-          <div className="text-xs text-muted-foreground">{leg.origin}</div>
+          <div className="text-sm text-muted-foreground">{leg.originCode} - {leg.origin}</div>
         </div>
 
         {/* Duration and Stops */}
@@ -83,8 +82,7 @@ const FlightLegDisplay = ({ leg, label }: { leg: FlightLeg; label: string }) => 
         {/* Arrival */}
         <div className="text-right">
           <div className="text-xl font-bold text-foreground">{leg.arrivalTime}</div>
-          <div className="text-sm text-muted-foreground">{leg.destinationCode}</div>
-          <div className="text-xs text-muted-foreground">{leg.destination}</div>
+          <div className="text-sm text-muted-foreground">{leg.destinationCode} - {leg.destination}</div>
         </div>
       </div>
     </div>
