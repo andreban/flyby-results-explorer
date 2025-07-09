@@ -10,7 +10,8 @@ const Index = () => {
   const { toast } = useToast();
   const [sortBy, setSortBy] = useState<SortOption>('price');
   const [filters, setFilters] = useState<FilterState>({
-    priceRange: [300, 900],
+    minPrice: 300,
+    maxPrice: 900,
     departureAirports: [],
     arrivalAirports: [],
     stops: [],
@@ -22,8 +23,8 @@ const Index = () => {
   const handleSmartFilterChange = (newFilters: Partial<FilterState>) => {
     setFilters(prevFilters => {
       const updatedFilters = { ...prevFilters, ...newFilters };
-      if (newFilters.priceRange) {
-        setTempPriceRange(newFilters.priceRange);
+      if (newFilters.minPrice && newFilters.maxPrice) {
+        setTempPriceRange([newFilters.minPrice, newFilters.maxPrice]);
       }
       return updatedFilters;
     });
@@ -33,7 +34,7 @@ const Index = () => {
   const filteredAndSortedFlights = useMemo(() => {
     const filtered = mockRoundTripFlights.filter(flight => {
       // Price filter
-      if (flight.totalPrice < filters.priceRange[0] || flight.totalPrice > filters.priceRange[1]) {
+      if (flight.totalPrice < filters.minPrice || flight.totalPrice > filters.maxPrice) {
         return false;
       }
       
@@ -145,7 +146,8 @@ const Index = () => {
                   <button
                     onClick={() => {
                       setFilters({
-                        priceRange: [300, 900],
+                        minPrice: 300,
+                        maxPrice: 900,
                         departureAirports: [],
                         arrivalAirports: [],
                         stops: [],

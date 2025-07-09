@@ -6,6 +6,10 @@ The current focus is on ensuring the application is free of bugs and that all fe
 
 ## Recent Changes
 
+- **Prompt API Integration:**
+    - The integration with the Prompt API has been updated to use a system prompt and to set the `temperature` and `topK` parameters.
+    - The JSON schema has been updated to include default values and to disallow additional properties.
+- **API Integration:** Replaced the mock implementation of `getFilterConfigFromQuery` with a real API call to the Built-in AI (Gemini Nano) service.
 - **"Clear All Filters" Bug Fix:**
     - Fixed a bug where the "Clear all filters" button in the empty results view was not resetting the price range slider.
 - **Price Range Slider Fix:**
@@ -17,6 +21,5 @@ The current focus is on ensuring the application is free of bugs and that all fe
 
 ## Next Steps
 
-- **API Integration:** Replace the mock implementation of `getFilterConfigFromQuery` with a real API call to a natural language processing service.
 - **UI/UX Refinements:** Continue to refine the UI and UX of the Smart Filters feature and the rest of the application.
 - **Testing:** Add tests for the new Smart Filters functionality and the "Clear all filters" button.

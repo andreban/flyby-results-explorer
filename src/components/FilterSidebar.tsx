@@ -9,7 +9,8 @@ import { X } from "lucide-react";
 import { SmartFilters } from "./SmartFilters";
 
 export interface FilterState {
-  priceRange: [number, number];
+  minPrice: number;
+  maxPrice: number;
   departureAirports: string[];
   arrivalAirports: string[];
   stops: number[];
@@ -46,10 +47,17 @@ export const FilterSidebar = ({
   };
 
   const handleSmartFilterChange = (newFilters: Partial<FilterState>) => {
-    onFiltersChange({
-      ...filters,
-      ...newFilters
-    });
+    const { minPrice, maxPrice, ...rest } = newFilters;
+    const updatedFilters: FilterState = { ...filters, ...rest };
+
+    if (minPrice !== undefined) {
+      updatedFilters.minPrice = minPrice;
+    }
+    if (maxPrice !== undefined) {
+      updatedFilters.maxPrice = maxPrice;
+    }
+
+    onFiltersChange(updatedFilters);
   };
 
   const toggleArrayFilter = (key: keyof FilterState, value: string) => {
@@ -71,7 +79,8 @@ export const FilterSidebar = ({
 
   const clearAllFilters = () => {
     onFiltersChange({
-      priceRange: priceRange,
+      minPrice: priceRange[0],
+      maxPrice: priceRange[1],
       departureAirports: [],
       arrivalAirports: [],
       stops: [],
@@ -85,8 +94,8 @@ export const FilterSidebar = ({
     filters.arrivalAirports.length > 0 ||
     filters.stops.length > 0 ||
     filters.airlines.length > 0 ||
-    filters.priceRange[0] !== priceRange[0] ||
-    filters.priceRange[1] !== priceRange[1];
+    filters.minPrice !== priceRange[0] ||
+    filters.maxPrice !== priceRange[1];
 
   return (
     <Card>
@@ -112,7 +121,10 @@ export const FilterSidebar = ({
         <Slider
           value={tempPriceRange}
           onValueChange={(value) => setTempPriceRange(value as [number, number])}
-          onValueCommit={(value) => handleFilterChange('priceRange', value as [number, number])}
+          onValueCommit={(value) => {
+            handleFilterChange('minPrice', value[0]);
+            handleFilterChange('maxPrice', value[1]);
+          }}
           max={priceRange[1]}
           min={priceRange[0]}
           step={50}

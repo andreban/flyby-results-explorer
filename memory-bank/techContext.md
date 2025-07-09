@@ -11,6 +11,19 @@ This project is built with:
 - **Tailwind CSS:** A utility-first CSS framework for rapidly building custom user interfaces.
 - **React Router:** For declarative routing in the React application.
 - **TanStack Query:** For data fetching, caching, and state management.
+- **Built-in AI (Gemini Nano):** For in-browser natural language processing, used in the Smart Filters feature.
+
+## Built-in AI API
+
+The project utilizes the **Prompt API**, which is part of the Built-in AI APIs in Chrome. This API is available under the `window.LanguageModel` namespace and provides direct access to the **Gemini Nano** model, allowing for on-device natural language processing without needing to send data to a server.
+
+### Key Features:
+- **On-device Processing:** All processing happens locally in the user's browser, which is great for privacy and speed.
+- **Session-based:** The API works with sessions that can maintain the context of a conversation. The session is initialized with a system prompt, `temperature`, and `topK` parameters to control the model's behavior.
+- **Availability:** The application must first check if the model is available (`"available"`) or if it needs to be downloaded (`"downloadable"`).
+- **Structured Output:** The API supports forcing the model to return a JSON object that conforms to a specific **JSON Schema**. This is done by passing the schema in the `responseConstraint` option when calling the prompt methods. The schema can include default values for properties.
+
+This API is used in the `getFilterConfigFromQuery` function to interpret natural language queries from the user and translate them into filter configurations.
 
 ## Development Setup
 
