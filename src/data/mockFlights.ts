@@ -4,9 +4,9 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
   {
     id: "1",
     outbound: {
-      airline: "United Airlines",
+      airline: { code: "UA", name: "United Airlines" },
       origin: "New York",
-      destination: "Los Angeles", 
+      destination: "Los Angeles",
       originCode: "JFK",
       destinationCode: "LAX",
       departureTime: "08:30",
@@ -17,7 +17,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
       date: "Dec 15, 2024"
     },
     return: {
-      airline: "United Airlines",
+      airline: { code: "UA", name: "United Airlines" },
       origin: "Los Angeles",
       destination: "New York",
       originCode: "LAX",
@@ -35,7 +35,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
   {
     id: "2",
     outbound: {
-      airline: "Delta Air Lines",
+      airline: { code: "DL", name: "Delta Air Lines" },
       origin: "New York",
       destination: "Los Angeles",
       originCode: "JFK", 
@@ -48,7 +48,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
       date: "Dec 15, 2024"
     },
     return: {
-      airline: "Delta Air Lines",
+      airline: { code: "DL", name: "Delta Air Lines" },
       origin: "Los Angeles",
       destination: "New York",
       originCode: "LAX",
@@ -66,7 +66,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
   {
     id: "3",
     outbound: {
-      airline: "American Airlines",
+      airline: { code: "AA", name: "American Airlines" },
       origin: "New York",
       destination: "Los Angeles",
       originCode: "JFK",
@@ -79,7 +79,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
       date: "Dec 15, 2024"
     },
     return: {
-      airline: "American Airlines",
+      airline: { code: "AA", name: "American Airlines" },
       origin: "Los Angeles",
       destination: "New York",
       originCode: "LAX",
@@ -97,7 +97,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
   {
     id: "4",
     outbound: {
-      airline: "Southwest Airlines",
+      airline: { code: "WN", name: "Southwest Airlines" },
       origin: "New York",
       destination: "Los Angeles",
       originCode: "LGA",
@@ -110,7 +110,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
       date: "Dec 15, 2024"
     },
     return: {
-      airline: "Southwest Airlines",
+      airline: { code: "WN", name: "Southwest Airlines" },
       origin: "Los Angeles",
       destination: "New York",
       originCode: "LAX",
@@ -128,7 +128,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
   {
     id: "5",
     outbound: {
-      airline: "JetBlue Airways",
+      airline: { code: "B6", name: "JetBlue Airways" },
       origin: "New York",
       destination: "Los Angeles",
       originCode: "JFK",
@@ -141,7 +141,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
       date: "Dec 15, 2024"
     },
     return: {
-      airline: "JetBlue Airways",
+      airline: { code: "B6", name: "JetBlue Airways" },
       origin: "Los Angeles",
       destination: "New York",
       originCode: "LAX",
@@ -159,7 +159,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
   {
     id: "6",
     outbound: {
-      airline: "Spirit Airlines",
+      airline: { code: "NK", name: "Spirit Airlines" },
       origin: "New York",
       destination: "Los Angeles",
       originCode: "LGA",
@@ -172,7 +172,7 @@ export const mockRoundTripFlights: RoundTripFlight[] = [
       date: "Dec 15, 2024"
     },
     return: {
-      airline: "Spirit Airlines",
+      airline: { code: "NK", name: "Spirit Airlines" },
       origin: "Los Angeles",
       destination: "New York",
       originCode: "LAX",
@@ -209,12 +209,12 @@ export const availableAirports = {
 };
 
 export const availableAirlines = [
-  "United Airlines",
-  "Delta Air Lines", 
-  "American Airlines",
-  "Southwest Airlines",
-  "JetBlue Airways",
-  "Spirit Airlines",
-  "Alaska Airlines",
-  "Frontier Airlines"
+  { code: "UA", name: "United Airlines" },
+  { code: "DL", name: "Delta Air Lines" },
+  { code: "AA", name: "American Airlines" },
+  { code: "WN", name: "Southwest Airlines" },
+  { code: "B6", name: "JetBlue Airways" },
+  { code: "NK", name: "Spirit Airlines" },
+  { code: "AS", name: "Alaska Airlines" },
+  { code: "F9", name: "Frontier Airlines" }
 ];

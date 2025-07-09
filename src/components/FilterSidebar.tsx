@@ -25,7 +25,7 @@ interface FilterSidebarProps {
     departure: { code: string; name: string }[];
     arrival: { code: string; name: string }[];
   };
-  availableAirlines: string[];
+  availableAirlines: { code: string; name: string }[];
   priceRange: [number, number];
   tempPriceRange: [number, number];
   setTempPriceRange: (value: [number, number]) => void;
@@ -156,14 +156,14 @@ export const FilterSidebar = ({
         <Label className="text-sm font-medium mb-3 block">Airlines</Label>
         <div className="space-y-2">
           {availableAirlines.map((airline) => (
-            <div key={airline} className="flex items-center space-x-2">
+            <div key={airline.code} className="flex items-center space-x-2">
               <Checkbox
-                id={`airline-${airline}`}
-                checked={filters.airlines.includes(airline)}
-                onCheckedChange={() => toggleArrayFilter('airlines', airline)}
+                id={`airline-${airline.code}`}
+                checked={filters.airlines.includes(airline.code)}
+                onCheckedChange={() => toggleArrayFilter('airlines', airline.code)}
               />
-              <Label htmlFor={`airline-${airline}`} className="text-sm">
-                {airline}
+              <Label htmlFor={`airline-${airline.code}`} className="text-sm">
+                {airline.name}
               </Label>
             </div>
           ))}
@@ -219,15 +219,18 @@ export const FilterSidebar = ({
           <div>
             <Label className="text-sm font-medium mb-3 block">Active Filters</Label>
             <div className="flex flex-wrap gap-2">
-              {filters.airlines.map((airline) => (
-                <Badge key={airline} variant="secondary" className="text-xs">
-                  {airline}
-                  <X 
-                    className="h-3 w-3 ml-1 cursor-pointer" 
-                    onClick={() => toggleArrayFilter('airlines', airline)}
-                  />
-                </Badge>
-              ))}
+              {filters.airlines.map((airlineCode) => {
+                const airline = availableAirlines.find(a => a.code === airlineCode);
+                return (
+                  <Badge key={airlineCode} variant="secondary" className="text-xs">
+                    {airline ? airline.name : airlineCode}
+                    <X 
+                      className="h-3 w-3 ml-1 cursor-pointer" 
+                      onClick={() => toggleArrayFilter('airlines', airlineCode)}
+                    />
+                  </Badge>
+                );
+              })}
               {filters.stops.map((stops) => (
                 <Badge key={stops} variant="secondary" className="text-xs">
                   {stops === 0 ? 'Nonstop' : `${stops} stop${stops > 1 ? 's' : ''}`}

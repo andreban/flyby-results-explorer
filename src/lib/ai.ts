@@ -79,7 +79,15 @@ export const getFilterConfigFromQuery = async (query: string): Promise<Partial<F
           description: "IATA airport code to filter for arrival airport"
         },
         description: "List of 3 letter IATA airport codes to filter for arrival airports"
-      }      
+      },
+      airlines: {
+        type: "array",
+        items: {
+          type: "string",
+          description: "2 letter IATA airline code"
+        },
+        description: "List of 2 letter IATA airline codes with user preferred airlines"
+      }
     },
     required: [],
     additionalProperties: false

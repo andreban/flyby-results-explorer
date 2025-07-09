@@ -63,8 +63,8 @@ const Index = () => {
       
       // Airlines filter (considering both legs)
       if (filters.airlines.length > 0) {
-        const outboundAirlineMatch = filters.airlines.includes(flight.outbound.airline);
-        const returnAirlineMatch = filters.airlines.includes(flight.return.airline);
+        const outboundAirlineMatch = filters.airlines.includes(flight.outbound.airline.code);
+        const returnAirlineMatch = filters.airlines.includes(flight.return.airline.code);
         if (!outboundAirlineMatch && !returnAirlineMatch) return false;
       }
       

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 export interface FlightLeg {
-  airline: string;
+  airline: { code: string; name: string };
   origin: string;
   destination: string;
   originCode: string;
@@ -49,7 +49,7 @@ const FlightLegDisplay = ({ leg, label }: { leg: FlightLeg; label: string }) => 
           <Plane className="h-3 w-3 text-travel-blue" />
         </div>
         <div>
-          <div className="font-medium text-sm">{leg.airline}</div>
+          <div className="font-medium text-sm">{leg.airline.name}</div>
           {leg.aircraft && (
             <div className="text-xs text-muted-foreground">{leg.aircraft}</div>
           )}
