@@ -23,8 +23,11 @@ const Index = () => {
   const handleSmartFilterChange = (newFilters: Partial<FilterState>) => {
     setFilters(prevFilters => {
       const updatedFilters = { ...prevFilters, ...newFilters };
-      if (newFilters.minPrice && newFilters.maxPrice) {
-        setTempPriceRange([newFilters.minPrice, newFilters.maxPrice]);
+      if (newFilters.minPrice || newFilters.maxPrice) {
+        setTempPriceRange([
+          newFilters.minPrice || prevFilters.minPrice,
+          newFilters.maxPrice || prevFilters.maxPrice
+        ]);
       }
       return updatedFilters;
     });
@@ -111,7 +114,8 @@ const Index = () => {
           <div className="lg:w-80 flex-shrink-0">
             <FilterSidebar
               filters={filters}
-              onFiltersChange={handleSmartFilterChange}
+              onManualFilterChange={setFilters}
+              onSmartFilterChange={handleSmartFilterChange}
               availableAirports={availableAirports}
               availableAirlines={availableAirlines}
               priceRange={[300, 900]}

@@ -8,8 +8,8 @@
 - The UI is responsive and provides a good user experience on different screen sizes.
 - The "Book" button simulation with a toast notification is implemented.
 - The application correctly displays the search query information.
-- The price filter now correctly uses a dual-handle slider and displays the selected range with labels.
-- **Smart Filters:** The Smart Filters feature is now connected to the Built-in AI API and can extract filter criteria from natural language queries. The integration has been improved to use a system prompt and to control the model's output with `temperature` and `topK` parameters. The logic for handling `nonstop`, `onestop`, and `twostop` filters has been corrected to align with the application's filter state.
+- The price filter now correctly uses a dual-handle slider and displays the selected range with labels. A bug that caused the `minPrice` to reset has been fixed.
+- **Smart Filters:** The Smart Filters feature is now connected to the Built-in AI API and can extract filter criteria from natural language queries. The integration has been improved to use a system prompt and to control the model's output with `temperature` and `topK` parameters. The logic for handling `nonstop`, `onestop`, and `twostop` filters has been corrected to align with the application's filter state. A regression that prevented the price filter from being updated by the Smart Filters feature has been fixed.
 
 ## What's Left to Build
 

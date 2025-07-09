@@ -21,6 +21,10 @@ The current focus is on ensuring the application is free of bugs and that all fe
 - **Stops Filter Logic:**
     - Updated the `getFilterConfigFromQuery` function to correctly handle the `nonstop`, `onestop`, and `twostop` settings from the AI model and transform them into the `stops` array required by the application's filter state.
     - Corrected the JSON schema in `ai.ts` to use `onestop` and `twostop` to match the expected property names.
+- **Price Filter Bug Fix:**
+    - Fixed a bug where the `minPrice` filter would reset to its default value after being adjusted. This was resolved by separating the filter change handlers for manual and smart filter updates.
+- **Smart Filter Price Update Bug Fix:**
+    - Fixed a regression where the `minPrice` and `maxPrice` filters were not being updated when the Prompt API returned new values.
 
 ## Next Steps
 

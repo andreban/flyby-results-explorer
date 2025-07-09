@@ -19,7 +19,8 @@ export interface FilterState {
 
 interface FilterSidebarProps {
   filters: FilterState;
-  onFiltersChange: (filters: FilterState) => void;
+  onManualFilterChange: (filters: FilterState) => void;
+  onSmartFilterChange: (filters: Partial<FilterState>) => void;
   availableAirports: {
     departure: string[];
     arrival: string[];
@@ -32,7 +33,8 @@ interface FilterSidebarProps {
 
 export const FilterSidebar = ({
   filters,
-  onFiltersChange,
+  onManualFilterChange,
+  onSmartFilterChange,
   availableAirports,
   availableAirlines,
   priceRange,
@@ -40,24 +42,14 @@ export const FilterSidebar = ({
   setTempPriceRange
 }: FilterSidebarProps) => {
   const handleFilterChange = (key: keyof FilterState, value: FilterState[keyof FilterState]) => {
-    onFiltersChange({
+    onManualFilterChange({
       ...filters,
       [key]: value
     });
   };
 
   const handleSmartFilterChange = (newFilters: Partial<FilterState>) => {
-    const { minPrice, maxPrice, ...rest } = newFilters;
-    const updatedFilters: FilterState = { ...filters, ...rest };
-
-    if (minPrice !== undefined) {
-      updatedFilters.minPrice = minPrice;
-    }
-    if (maxPrice !== undefined) {
-      updatedFilters.maxPrice = maxPrice;
-    }
-
-    onFiltersChange(updatedFilters);
+    onSmartFilterChange(newFilters);
   };
 
   const toggleArrayFilter = (key: keyof FilterState, value: string) => {
@@ -78,7 +70,7 @@ export const FilterSidebar = ({
   };
 
   const clearAllFilters = () => {
-    onFiltersChange({
+    onManualFilterChange({
       minPrice: priceRange[0],
       maxPrice: priceRange[1],
       departureAirports: [],
