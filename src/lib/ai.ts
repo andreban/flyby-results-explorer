@@ -37,6 +37,21 @@ export const getFilterConfigFromQuery = async (query: string): Promise<Partial<F
         default: 1000,
         description: "The maximum price for the flights"
       },
+      nonstop: {
+        type: "boolean",
+        default: false,
+        description: "If the nonstop filter option should be checked. Also called direct flights."
+      },
+      onestop: {
+        type: "boolean",
+        default: false,
+        description: "If the 1 stop filter option should be checked."
+      },
+      twostop: {
+        type: "boolean",
+        default: false,
+        description: "If the 2+ stops filter option should be checked."
+      }
     },
     required: [],
     additionalProperties: false
@@ -48,7 +63,20 @@ export const getFilterConfigFromQuery = async (query: string): Promise<Partial<F
     });
     console.log(result);
     const parsedResult = JSON.parse(result);
-    return parsedResult;
+
+    const { nonstop, onestop, twostop, ...rest } = parsedResult;
+    const stops = [];
+    if (nonstop) {
+      stops.push(0);
+    }
+    if (onestop) {
+      stops.push(1);
+    }
+    if (twostop) {
+      stops.push(2);
+    }
+
+    return { ...rest, stops };
   } catch (error) {
     console.error("Error getting filter config from query:", error);
     return {};

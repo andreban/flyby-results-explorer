@@ -18,6 +18,9 @@ The current focus is on ensuring the application is free of bugs and that all fe
     - Created a new `getFilterConfigFromQuery` function that returns a mock filter configuration.
 - **TypeScript and ESLint Fixes:**
     - Resolved a series of TypeScript errors and ESLint warnings.
+- **Stops Filter Logic:**
+    - Updated the `getFilterConfigFromQuery` function to correctly handle the `nonstop`, `onestop`, and `twostop` settings from the AI model and transform them into the `stops` array required by the application's filter state.
+    - Corrected the JSON schema in `ai.ts` to use `onestop` and `twostop` to match the expected property names.
 
 ## Next Steps
 
