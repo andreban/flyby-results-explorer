@@ -26,6 +26,8 @@ The current focus is on ensuring the application is free of bugs and that all fe
 - **Smart Filter Price Update Bug Fix:**
     - Fixed a regression where the `minPrice` and `maxPrice` filters were not being updated when the Prompt API returned new values.
 
+- **Deployment Configuration:** The application now uses `HashRouter` and relative paths in `index.html` to support deployments to relative paths and prevent 404 errors. The `NotFound` page has been updated to use the `Link` component for correct client-side navigation.
+
 ## Next Steps
 
 - **UI/UX Refinements:** Continue to refine the UI and UX of the Smart Filters feature and the rest of the application.
