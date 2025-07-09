@@ -32,3 +32,9 @@ The current focus is on ensuring the application is free of bugs and that all fe
 
 - **UI/UX Refinements:** Continue to refine the UI and UX of the Smart Filters feature and the rest of the application.
 - **Testing:** Add tests for the new Smart Filters functionality and the "Clear all filters" button.
+
+## Airport Filter Compatibility
+
+- **Standardized Airport Codes:** The application now exclusively uses 3-letter IATA codes for airport filtering to ensure compatibility between the Prompt API and the manual filter controls.
+- **Updated Filtering Logic:** The filtering logic in `Index.tsx` has been updated to use strict equality checks for airport codes, improving reliability.
+- **Mock Data Alignment:** The `availableAirports` in `mockFlights.ts` has been updated to provide a simple list of IATA codes, ensuring consistency with the filter state.

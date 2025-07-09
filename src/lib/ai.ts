@@ -63,7 +63,23 @@ export const getFilterConfigFromQuery = async (query: string): Promise<Partial<F
         type: "boolean",
         default: false,
         description: "If the 2+ stops filter option should be checked."
-      }
+      },
+      departureAirports: {
+        type: "array",
+        items: {
+          type: "string",
+          description: "IATA airport code to filter for departure airport"
+        },
+        description: "List of 3 letter IATA airport codes to filter for departure airports"
+      },
+      arrivalAirports: {
+        type: "array",
+        items: {
+          type: "string",
+          description: "IATA airport code to filter for arrival airport"
+        },
+        description: "List of 3 letter IATA airport codes to filter for arrival airports"
+      }      
     },
     required: [],
     additionalProperties: false

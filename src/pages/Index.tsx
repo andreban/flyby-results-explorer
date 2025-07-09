@@ -22,7 +22,10 @@ const Index = () => {
   // Handle smart filter changes
   const handleSmartFilterChange = (newFilters: Partial<FilterState>) => {
     setFilters(prevFilters => {
-      const updatedFilters = { ...prevFilters, ...newFilters };
+      const updatedFilters = {
+        ...prevFilters,
+        ...newFilters,
+      };
       if (newFilters.minPrice || newFilters.maxPrice) {
         setTempPriceRange([
           newFilters.minPrice || prevFilters.minPrice,
@@ -42,19 +45,13 @@ const Index = () => {
       }
       
       // Departure airports filter
-      if (filters.departureAirports.length > 0) {
-        const airportMatch = filters.departureAirports.some(airport => 
-          airport.includes(flight.outbound.originCode)
-        );
-        if (!airportMatch) return false;
+      if (filters.departureAirports.length > 0 && !filters.departureAirports.includes(flight.outbound.originCode)) {
+        return false;
       }
       
       // Arrival airports filter
-      if (filters.arrivalAirports.length > 0) {
-        const airportMatch = filters.arrivalAirports.some(airport => 
-          airport.includes(flight.outbound.destinationCode)
-        );
-        if (!airportMatch) return false;
+      if (filters.arrivalAirports.length > 0 && !filters.arrivalAirports.includes(flight.outbound.destinationCode)) {
+        return false;
       }
       
       // Stops filter (considering both legs)

@@ -199,8 +199,8 @@ export const searchQuery = {
 };
 
 export const availableAirports = {
-  departure: ["JFK - John F. Kennedy", "LGA - LaGuardia"],
-  arrival: ["LAX - Los Angeles International"]
+  departure: ["JFK", "LGA"],
+  arrival: ["LAX"]
 };
 
 export const availableAirlines = [
