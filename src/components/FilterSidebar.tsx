@@ -41,13 +41,6 @@ export const FilterSidebar = ({
   tempPriceRange,
   setTempPriceRange
 }: FilterSidebarProps) => {
-  const handleFilterChange = (key: keyof FilterState, value: FilterState[keyof FilterState]) => {
-    onManualFilterChange({
-      ...filters,
-      [key]: value
-    });
-  };
-
   const handleSmartFilterChange = (newFilters: Partial<FilterState>) => {
     onSmartFilterChange(newFilters);
   };
@@ -58,7 +51,10 @@ export const FilterSidebar = ({
       ? currentArray.filter(item => item !== value)
       : [...currentArray, value];
     
-    handleFilterChange(key, newArray);
+    onManualFilterChange({
+      ...filters,
+      [key]: newArray
+    });
   };
 
   const toggleStopsFilter = (stops: number) => {
@@ -66,7 +62,10 @@ export const FilterSidebar = ({
       ? filters.stops.filter(s => s !== stops)
       : [...filters.stops, stops];
     
-    handleFilterChange('stops', newStops);
+    onManualFilterChange({
+      ...filters,
+      stops: newStops
+    });
   };
 
   const clearAllFilters = () => {
@@ -114,8 +113,11 @@ export const FilterSidebar = ({
           value={tempPriceRange}
           onValueChange={(value) => setTempPriceRange(value as [number, number])}
           onValueCommit={(value) => {
-            handleFilterChange('minPrice', value[0]);
-            handleFilterChange('maxPrice', value[1]);
+            onManualFilterChange({
+              ...filters,
+              minPrice: value[0],
+              maxPrice: value[1],
+            });
           }}
           max={priceRange[1]}
           min={priceRange[0]}
