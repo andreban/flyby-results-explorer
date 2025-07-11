@@ -16,16 +16,135 @@ export const getFilterConfigFromQuery = async (query: string): Promise<Partial<F
   }
 
   const systemPrompt = `
-    You are a helpful assistant that extracts flight filter information from a user's query.
-    Those are additional rules to follow:
-      - No fields are required, so if the user doesn't provide information on a filter,
-        don't return the field
-      - If the user says the want prices "below" a certain value, they are ALWAYS referring
-        "maxPrice" filter.
-      - Do not include "minPrice" unless the user explicitly specifies parameters for that value.
-      - "direct" flights refer to the "nonstop" filter.
-      - "nonstop", "oneStop" and "twostop" can all be selected. If the user says "less than
-        2 stops" for example, both "nonstop" and "onestop" should be selected.
+You are a helpful assistant that generates structured data for flight search filters. The response should always include all fields, even if they are not present in the query.
+
+Examples:
+<example>
+<query>
+Flights under $800
+</query>
+<output>
+{
+  "minPrice": -1,
+  "maxPrice": 800,
+  "nonstop": false,
+  "onestop": false,
+  "twostop": false,
+  "departureAirports": [],
+  "arrivalAirports": [],
+  "airlines": []
+}
+</output>
+</example>
+
+<example>
+<query>
+non-stop flights
+</query>
+<output>
+{
+  "minPrice": -1,
+  "maxPrice": -1,
+  "nonstop": true,
+  "onestop": false,
+  "twostop": false,
+  "departureAirports": [],
+  "arrivalAirports": [],
+  "airlines": []
+}
+</output>
+</example>
+
+<example>
+<query>
+To SDU or GIG
+</query>
+<output>
+{
+  "minPrice": -1,
+  "maxPrice": -1,
+  "nonstop": false,
+  "onestop": false,
+  "twostop": false,
+  "departureAirports": [],
+  "arrivalAirports": ["SDU", "GIG"],
+  "airlines": []
+}
+</output>
+</example>
+
+<example>
+<query>
+Filter by price
+</query>
+<output>
+{
+  "minPrice": -1,
+  "maxPrice": -1,
+  "nonstop": false,
+  "onestop": false,
+  "twostop": false,
+  "departureAirports": [],
+  "arrivalAirports": [],
+  "airlines": []
+}
+</output>
+</example>
+
+<example>
+<query>
+Flights from LHR to SFO on British Airways
+</query>
+<output>
+{
+  "minPrice": -1,
+  "maxPrice": -1,
+  "nonstop": false,
+  "onestop": false,
+  "twostop": false,
+  "departureAirports": ["LHR"],
+  "arrivalAirports": ["SFO"],
+  "airlines": ["BA"]
+}
+</output>
+</example>
+
+<example>
+<query>
+Flights with 2 or more stops
+</query>
+<output>
+{
+  "minPrice": -1,
+  "maxPrice": -1,
+  "nonstop": false,
+  "onestop": false,
+  "twostop": true,
+  "departureAirports": [],
+  "arrivalAirports": [],
+  "airlines": []
+}
+</output>
+</example>
+
+
+<example>
+<query>
+flights with at most one stop
+</query>
+<output>
+{
+  "minPrice": -1,
+  "maxPrice": -1,
+  "nonstop": true,
+  "onestop": true,
+  "twostop": false,
+  "departureAirports": [],
+  "arrivalAirports": [],
+  "airlines": []
+}
+</output>
+</example>
   `;
   const session = await LanguageModel.create({
     temperature: 0.5,
@@ -37,60 +156,63 @@ export const getFilterConfigFromQuery = async (query: string): Promise<Partial<F
   });
 
   const schema = {
-    type: "object",
-    properties: {
-      minPrice: {
-        type: "number",
-        default: 300,
-        description: "The minimum price for the flights"
+    "type": "object",
+    "properties": {
+      "minPrice": {
+        "type": "number",
+        "default": -1,
+        "description": "The minimum price for the flights"
       },
-      maxPrice: {
-        type: "number",
-        default: 1000,
-        description: "The maximum price for the flights"
+      "maxPrice": {
+        "type": "number",
+        "default": -1,
+        "description": "The maximum price for the flights"
       },
-      nonstop: {
-        type: "boolean",
-        default: false,
-        description: "If the nonstop filter option should be checked. Also called direct flights."
+      "nonstop": {
+        "type": "boolean",
+        "default": false,
+        "description": "If the nonstop filter option should be checked. Also called direct flights."
       },
-      onestop: {
-        type: "boolean",
-        default: false,
-        description: "If the 1 stop filter option should be checked."
+      "onestop": {
+        "type": "boolean",
+        "default": false,
+        "description": "If the 1 stop filter option should be checked."
       },
-      twostop: {
-        type: "boolean",
-        default: false,
-        description: "If the 2+ stops filter option should be checked."
+      "twostop": {
+        "type": "boolean",
+        "default": false,
+        "description": "If the 2+ stops filter option should be checked."
       },
-      departureAirports: {
-        type: "array",
-        items: {
-          type: "string",
-          description: "IATA airport code to filter for departure airport"
+      "departureAirports": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",        
+          "description": "IATA airport code to filter for departure airport"
         },
-        description: "List of 3 letter IATA airport codes to filter for departure airports"
+        "description": "List of 3 letter IATA airport codes to filter for departure airports"
       },
-      arrivalAirports: {
-        type: "array",
-        items: {
-          type: "string",
-          description: "IATA airport code to filter for arrival airport"
+      "arrivalAirports": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "IATA airport code to filter for arrival airport"
         },
-        description: "List of 3 letter IATA airport codes to filter for arrival airports"
+        "description": "List of 3 letter IATA airport codes to filter for arrival airports"
       },
-      airlines: {
-        type: "array",
-        items: {
-          type: "string",
-          description: "2 letter IATA airline code"
+      "airlines": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Z0-9]{2}$",
+          "description": "2 letter IATA airline code"
         },
-        description: "List of 2 letter IATA airline codes with user preferred airlines"
+        "description": "List of 2 letter IATA airline codes with user preferred airlines"
       }
     },
-    required: [],
-    additionalProperties: false
+    "required": ["minPrice", "maxPrice", "nonstop", "onestop", "twostop", "departureAirports", "arrivalAirports", "airlines"],
+    "additionalProperties": false
   };
 
   try {

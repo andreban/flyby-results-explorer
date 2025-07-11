@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { SearchSummary } from "@/components/SearchSummary";
-import { FlightCard, RoundTripFlight } from "@/components/FlightCard";
+import { FlightCard } from "@/components/FlightCard";
 import { FilterSidebar, FilterState } from "@/components/FilterSidebar";
 import { FlightResultsHeader, SortOption } from "@/components/FlightResultsHeader";
 import { mockRoundTripFlights, searchQuery, availableAirports, availableAirlines } from "@/data/mockFlights";
@@ -26,12 +26,17 @@ const Index = () => {
         ...prevFilters,
         ...newFilters,
       };
-      if (newFilters.minPrice || newFilters.maxPrice) {
-        setTempPriceRange([
-          newFilters.minPrice || prevFilters.minPrice,
-          newFilters.maxPrice || prevFilters.maxPrice
-        ]);
+  
+      if (newFilters.minPrice !== undefined || newFilters.maxPrice !== undefined) {
+        const absoluteMin = 300;
+        const absoluteMax = 900;
+  
+        const sliderMin = updatedFilters.minPrice !== -1 ? updatedFilters.minPrice : absoluteMin;
+        const sliderMax = updatedFilters.maxPrice !== -1 ? updatedFilters.maxPrice : absoluteMax;
+  
+        setTempPriceRange([sliderMin, sliderMax]);
       }
+  
       return updatedFilters;
     });
   };
@@ -40,7 +45,10 @@ const Index = () => {
   const filteredAndSortedFlights = useMemo(() => {
     const filtered = mockRoundTripFlights.filter(flight => {
       // Price filter
-      if (flight.totalPrice < filters.minPrice || flight.totalPrice > filters.maxPrice) {
+      if (filters.minPrice !== -1 && flight.totalPrice < filters.minPrice) {
+        return false;
+      }
+      if (filters.maxPrice !== -1 && flight.totalPrice > filters.maxPrice) {
         return false;
       }
       

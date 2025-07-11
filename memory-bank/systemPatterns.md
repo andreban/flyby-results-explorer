@@ -38,3 +38,11 @@ The application interacts with the **Prompt API** to power the Smart Filters fea
 4.  **Process the Response:** The response from the model, which is guaranteed to be a JSON object that conforms to the provided schema, is then parsed and used to update the application's filter state.
 
 5.  **Error Handling:** The implementation includes error handling to gracefully manage situations where the API is not available or if there is an issue with the model's response.
+
+## Filter State Management
+
+The application's filtering logic is designed to be robust and flexible, particularly in how it handles price filters.
+
+- **Price Filter Logic:** The `minPrice` and `maxPrice` filters use a default value of `-1` to indicate that the filter is not active. When either of these filters is set to `-1`, the filtering logic ignores it, allowing users to filter by only a minimum or maximum price.
+
+- **Price Range Slider:** The price range slider's UI state is managed by the `tempPriceRange` state variable. When a smart filter is applied, the `handleSmartFilterChange` function updates this state to reflect the new filter values. If the `minPrice` or `maxPrice` is `-1`, the slider resets to the absolute minimum or maximum value, ensuring the UI remains consistent.

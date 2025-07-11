@@ -6,6 +6,10 @@ The current focus is on ensuring the application is free of bugs and that all fe
 
 ## Recent Changes
 
+- **Price Filter Bug Fix:**
+  - Fixed a bug where the `minPrice` label in the price range slider was changing when a smart filter was applied. The `handleSmartFilterChange` function was updated to correctly derive the slider's UI state from the newly updated filter state, ensuring that when a price filter is not active, the slider resets to its absolute minimum or maximum value.
+- **Filter State Management:**
+  - Documented the filter state management logic in `systemPatterns.md` to ensure the behavior is not accidentally modified in the future.
 - **Prompt API Integration:**
     - The integration with the Prompt API has been updated to use a system prompt and to set the `temperature` and `topK` parameters.
     - The JSON schema has been updated to include default values and to disallow additional properties.
