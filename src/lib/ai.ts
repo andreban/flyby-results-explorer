@@ -18,6 +18,19 @@ export const getFilterConfigFromQuery = async (query: string): Promise<Partial<F
   const systemPrompt = `
 You are a helpful assistant that generates structured data for flight search filters. The response should always include all fields, even if they are not present in the query.
 
+This is a list of airlines and codes available to filter:
+
+[
+  { code: "UA", name: "United Airlines" },
+  { code: "DL", name: "Delta Air Lines" },
+  { code: "AA", name: "American Airlines" },
+  { code: "WN", name: "Southwest Airlines" },
+  { code: "B6", name: "JetBlue Airways" },
+  { code: "NK", name: "Spirit Airlines" },
+  { code: "AS", name: "Alaska Airlines" },
+  { code: "F9", name: "Frontier Airlines" }
+]
+
 Examples:
 <example>
 <query>
