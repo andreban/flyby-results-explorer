@@ -13,10 +13,10 @@
 - **Deployment:** The application now uses `HashRouter` and relative paths in `index.html` to support deployments to relative paths and prevent 404 errors. The `NotFound` page has been updated to use the `Link` component for correct client-side navigation.
 - **Airport Filter Compatibility:** Standardized the application to use 3-letter IATA codes for airport filtering, ensuring compatibility between the Prompt API and manual filter controls. The filtering logic has been updated for improved reliability.
 - **Display Airport Names:** The UI now displays airport names alongside their IATA codes in the flight results and filters, improving clarity for the user.
+- **Voice Input for Smart Filters:** Users can now use their voice to input filter queries. The feature includes a microphone button, recording state management, and integration with the Prompt API for speech-to-text transcription. The filters are now applied automatically after the transcription is complete.
 
 ## What's Left to Build
 
-- **Smart Filters UI:** Implement the user interface for the new Smart Filters feature.
 - **UI/UX Refinements:** Continue to improve the visual design and user experience of the flight results page.
 - **Component Refactoring:** Refactor components for better reusability and maintainability.
 - **Testing:** Implement unit and component tests to ensure the application is working as expected.

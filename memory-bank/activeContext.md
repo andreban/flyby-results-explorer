@@ -2,9 +2,26 @@
 
 ## Current Work Focus
 
-The current focus is on ensuring the application is free of bugs and that all features are working as expected.
+The current focus is on the new voice input feature for Smart Filters.
 
 ## Recent Changes
+
+- **Automatic Filtering After Voice Input:**
+  - The Smart Filters feature now automatically applies the filters as soon as the voice input has been transcribed.
+  - This was achieved by modifying the `onstop` event handler for the `MediaRecorder` to call the `handleFilter` function directly after a successful transcription.
+
+- **Voice Input for Smart Filters (User Fix):**
+  - The user has corrected the implementation of the voice input feature.
+  - The `prompt` method in `src/lib/voice.ts` now uses the correct payload structure for multimodal input, passing a single message object with a content array.
+  - A `@ts-expect-error` directive is used in `src/lib/voice.ts` to suppress type errors, avoiding the need for conflicting global type definitions.
+  - `src/lib/ai.ts` and `src/vite-env.d.ts` have been reverted to their original, working state.
+
+- **Voice Input for Smart Filters:**
+  - Implemented a new feature allowing users to input their flight filter queries using their voice.
+  - Added a microphone button to the `SmartFilters` component to start and stop recording.
+  - Created a new `src/lib/voice.ts` file to handle the speech-to-text transcription using the Prompt API's multimodal capabilities.
+  - Updated the `SmartFilters` component to manage recording state and integrate the new voice transcription functionality.
+  - Added TypeScript definitions for the multimodal Prompt API to `src/vite-env.d.ts`.
 
 - **Price Filter Bug Fix:**
   - Fixed a bug where the `minPrice` label in the price range slider was changing when a smart filter was applied. The `handleSmartFilterChange` function was updated to correctly derive the slider's UI state from the newly updated filter state, ensuring that when a price filter is not active, the slider resets to its absolute minimum or maximum value.
