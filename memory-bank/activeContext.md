@@ -6,6 +6,11 @@ The current focus is on the new voice input feature for Smart Filters.
 
 ## Recent Changes
 
+- **Microphone Button UI/UX:**
+  - The microphone button now provides better visual feedback to the user.
+  - When recording, the button displays a pulsing red dot to indicate that it is active.
+  - A tooltip has been added to the button to provide clear instructions on how to start and stop the recording.
+
 - **Conditionally Show Microphone Button:**
   - The microphone input button for the smart filters is now only shown if the Multimodal Prompt API is available.
   - This was achieved by creating a new `isMultimodalModelAvailable` function in `src/lib/voice.ts` and using it in the `SmartFilters` component to conditionally render the button.

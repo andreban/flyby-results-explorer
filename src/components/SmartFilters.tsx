@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Info, Mic, MicOff } from "lucide-react";
+import { Sparkles, Info, Mic } from "lucide-react";
 import { getFilterConfigFromQuery } from "@/lib/ai";
 import { getTranscriptionFromAudio, isMultimodalModelAvailable } from "@/lib/voice";
 import { FilterState } from "./FilterSidebar";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface SmartFiltersProps {
   onFiltersChange: (filters: Partial<FilterState>) => void;
@@ -90,9 +91,28 @@ Try something like: I want to see direct flights under £300."
           {isLoading ? "Filtering..." : "Filter flights"}
         </Button>
         {isMicAvailable && (
-          <Button variant="outline" onClick={handleMicClick} disabled={isLoading}>
-            {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" onClick={handleMicClick} disabled={isLoading}>
+                  {isRecording ? (
+                    <div className="flex items-center gap-2">
+                      <Mic className="w-5 h-5" />
+                      <span className="relative flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                      </span>
+                    </div>
+                  ) : (
+                    <Mic className="w-5 h-5" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {isRecording ? "Click to stop recording" : "Start recording"}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
       </div>
     </div>

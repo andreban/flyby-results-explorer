@@ -13,7 +13,7 @@
 - **Deployment:** The application now uses `HashRouter` and relative paths in `index.html` to support deployments to relative paths and prevent 404 errors. The `NotFound` page has been updated to use the `Link` component for correct client-side navigation.
 - **Airport Filter Compatibility:** Standardized the application to use 3-letter IATA codes for airport filtering, ensuring compatibility between the Prompt API and manual filter controls. The filtering logic has been updated for improved reliability.
 - **Display Airport Names:** The UI now displays airport names alongside their IATA codes in the flight results and filters, improving clarity for the user.
-- **Voice Input for Smart Filters:** Users can now use their voice to input filter queries. The feature includes a microphone button, recording state management, and integration with the Prompt API for speech-to-text transcription. The filters are now applied automatically after the transcription is complete.
+- **Voice Input for Smart Filters:** Users can now use their voice to input filter queries. The feature includes a microphone button, recording state management, and integration with the Prompt API for speech-to-text transcription. The filters are now applied automatically after the transcription is complete. The microphone button now provides better visual feedback, with a pulsing red dot and a tooltip to indicate that it is recording.
 
 ## What's Left to Build
 
