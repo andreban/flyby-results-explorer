@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Info, Mic, MicOff } from "lucide-react";
 import { getFilterConfigFromQuery } from "@/lib/ai";
-import { getTranscriptionFromAudio } from "@/lib/voice";
+import { getTranscriptionFromAudio, isMultimodalModelAvailable } from "@/lib/voice";
 import { FilterState } from "./FilterSidebar";
 
 interface SmartFiltersProps {
@@ -14,8 +14,13 @@ export const SmartFilters = ({ onFiltersChange }: SmartFiltersProps) => {
   const [query, setQuery] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [isRecording, setIsRecording] = React.useState(false);
+  const [isMicAvailable, setIsMicAvailable] = React.useState(false);
   const mediaRecorderRef = React.useRef<MediaRecorder | null>(null);
   const audioChunksRef = React.useRef<Blob[]>([]);
+
+  React.useEffect(() => {
+    isMultimodalModelAvailable().then(setIsMicAvailable);
+  }, []);
 
   const handleFilter = async (currentQuery: string = query) => {
     setIsLoading(true);
@@ -84,9 +89,11 @@ Try something like: I want to see direct flights under £300."
         <Button className="w-full" onClick={() => handleFilter()} disabled={isLoading || isRecording}>
           {isLoading ? "Filtering..." : "Filter flights"}
         </Button>
-        <Button variant="outline" onClick={handleMicClick} disabled={isLoading}>
-          {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-        </Button>
+        {isMicAvailable && (
+          <Button variant="outline" onClick={handleMicClick} disabled={isLoading}>
+            {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+          </Button>
+        )}
       </div>
     </div>
   );

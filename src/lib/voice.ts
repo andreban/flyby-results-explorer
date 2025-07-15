@@ -1,13 +1,26 @@
 // @ts-expect-error - LanguageModel is a global variable
 const LanguageModel = window.LanguageModel;
 
-export async function getTranscriptionFromAudio(audioBlob: Blob): Promise<string> {
+export async function isMultimodalModelAvailable(): Promise<boolean> {
+  if (!LanguageModel) {
+    return false;
+  }
+
   try {
     const availability = await LanguageModel.availability({
       expectedInputs: [{ type: 'audio' }],
     });
 
-    if (availability !== 'available') {
+    return availability === 'available';
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+
+export async function getTranscriptionFromAudio(audioBlob: Blob): Promise<string> {
+  try {
+    if (!await isMultimodalModelAvailable()) {
       throw new Error('Multimodal model not available');
     }
 

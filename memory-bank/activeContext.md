@@ -6,6 +6,10 @@ The current focus is on the new voice input feature for Smart Filters.
 
 ## Recent Changes
 
+- **Conditionally Show Microphone Button:**
+  - The microphone input button for the smart filters is now only shown if the Multimodal Prompt API is available.
+  - This was achieved by creating a new `isMultimodalModelAvailable` function in `src/lib/voice.ts` and using it in the `SmartFilters` component to conditionally render the button.
+
 - **Automatic Filtering After Voice Input:**
   - The Smart Filters feature now automatically applies the filters as soon as the voice input has been transcribed.
   - This was achieved by modifying the `onstop` event handler for the `MediaRecorder` to call the `handleFilter` function directly after a successful transcription.
