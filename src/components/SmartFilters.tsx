@@ -6,7 +6,7 @@ import { getFilterConfigFromQuery } from "@/lib/ai";
 import { getTranscriptionFromAudio, isMultimodalModelAvailable } from "@/lib/voice";
 import { FilterState } from "./FilterSidebar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
+import { Alert } from "@/components/ui/alert.tsx";
 
 interface SmartFiltersProps {
   onFiltersChange: (filters: Partial<FilterState>) => void;

@@ -169,7 +169,14 @@ flights with at most one stop
     initialPrompts: [{
       role: "system",
       content: systemPrompt,
-    }]
+    }],
+    monitor: (m) => {
+      m.addEventListener("downloadprogress", (e) => {
+        if(availability === "downloadable") {
+          onModelCallback('The model needs to be downloaded first. This might take a while. ' + `(${e.loaded * 100}%)`);
+        }
+      });
+    },
   });
 
   const schema = {
