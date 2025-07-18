@@ -3,16 +3,20 @@ import { FilterState } from "@/components/FilterSidebar";
 // @ts-expect-error - LanguageModel is a global variable
 const LanguageModel = window.LanguageModel;
 
-export const getFilterConfigFromQuery = async (query: string): Promise<Partial<FilterState>> => {
+export const getFilterConfigFromQuery = async (query: string, onModelCallback: (message: string) => void = () => {}): Promise<Partial<FilterState>> => {
   if (!LanguageModel) {
     console.error("Prompt API not available.");
     return {};
   }
 
   const availability = await LanguageModel.availability();
-  if (availability !== "available") {
+  if (availability !== "available" && availability !== "downloadable") {
     console.error("Prompt API not available.");
     return {};
+  }
+
+  if(availability === "downloadable") {
+    onModelCallback('The model needs to be downloaded first. This might take a while.');
   }
 
   const systemPrompt = `
@@ -200,7 +204,7 @@ flights with at most one stop
         "type": "array",
         "items": {
           "type": "string",
-          "pattern": "^[A-Z]{3}$",        
+          "pattern": "^[A-Z]{3}$",
           "description": "IATA airport code to filter for departure airport"
         },
         "description": "List of 3 letter IATA airport codes to filter for departure airports"

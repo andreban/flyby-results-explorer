@@ -6,6 +6,7 @@ import { getFilterConfigFromQuery } from "@/lib/ai";
 import { getTranscriptionFromAudio, isMultimodalModelAvailable } from "@/lib/voice";
 import { FilterState } from "./FilterSidebar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
 
 interface SmartFiltersProps {
   onFiltersChange: (filters: Partial<FilterState>) => void;
@@ -13,6 +14,7 @@ interface SmartFiltersProps {
 
 export const SmartFilters = ({ onFiltersChange }: SmartFiltersProps) => {
   const [query, setQuery] = React.useState("");
+  const [additionalLoadingMessage, setAdditionalLoadingMessage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [isRecording, setIsRecording] = React.useState(false);
   const [isMicAvailable, setIsMicAvailable] = React.useState(false);
@@ -25,7 +27,8 @@ export const SmartFilters = ({ onFiltersChange }: SmartFiltersProps) => {
 
   const handleFilter = async (currentQuery: string = query) => {
     setIsLoading(true);
-    const newFilters = await getFilterConfigFromQuery(currentQuery);
+    const newFilters = await getFilterConfigFromQuery(currentQuery, setAdditionalLoadingMessage);
+    setAdditionalLoadingMessage("");
     onFiltersChange(newFilters);
     setIsLoading(false);
   };
@@ -115,6 +118,7 @@ Try something like: I want to see direct flights under £300."
           </TooltipProvider>
         )}
       </div>
+      {additionalLoadingMessage !== "" && <Alert variant="loading" className="mt-2">{additionalLoadingMessage}</Alert>}
     </div>
   );
 };
